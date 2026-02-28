@@ -7,7 +7,7 @@ import org.arbol.classes.persona.Persona;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.printf("Se armó esta vaina");
+        System.out.println("Se armó esta vaina");
 
         // -- Sublista 1 (nodos normales con sw=0) --
         Nodo sub1Nodo2 = new Nodo(0, null, new Persona(4, "Diana", 28), null);
@@ -36,6 +36,11 @@ public class Main {
         Lista lista = new Lista(nodo1);
 
         System.out.println("=== Mostrar Lista ===");
+        lista.mostrarLista(lista.getCabeza());
+
+        System.out.println("\n === Lista tras modificar === \n");
+        Persona prueba = new Persona(7, "Pepe", 5);
+        lista.Registrar(5, prueba);
         lista.mostrarLista(lista.getCabeza());
     }
 }

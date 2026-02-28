@@ -1,6 +1,7 @@
 package org.arbol.classes.lista;
 
 import org.arbol.classes.nodo.Nodo;
+import org.arbol.classes.persona.Persona;
 
 public class Lista {
 
@@ -19,6 +20,16 @@ public class Lista {
 
     public void setCabeza(Nodo cabeza) {
         this.cabeza = cabeza;
+    }
+
+    public boolean Registrar (int padre, Persona persona) {
+        Nodo nodoPadre = buscar(padre, cabeza);
+        if (nodoPadre == null) {
+            return false;
+        }
+        Nodo nuevo = new Nodo(0, null, new Persona(persona.getId(), persona.getNombre(), persona.getEdad()), nodoPadre.getLiga());
+        nodoPadre.setLiga(nuevo);
+        return true;
     }
 
     public void mostrarLista (Nodo actual) {
