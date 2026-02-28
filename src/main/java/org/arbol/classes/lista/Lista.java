@@ -23,6 +23,9 @@ public class Lista {
 
     public void mostrarLista (Nodo actual) {
 
+        if (actual == null) {
+            System.out.println("La lista está vacía");
+        }
         while (actual != null) {
             if (actual.getSw() == 0) {
                 System.out.println(actual.getPersona().toString());
