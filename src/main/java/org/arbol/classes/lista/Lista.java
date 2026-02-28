@@ -35,4 +35,30 @@ public class Lista {
             actual = actual.getLiga();
         }
     }
+
+    private Nodo buscar(int id, Nodo nodo) {
+        Nodo aux = nodo;
+        if (aux == null) {
+            System.out.println("No se encontró el nodo buscado");
+            return null;
+        }
+
+        Nodo recursivo = null;
+
+        while (aux != null) {
+            if (aux.getSw() == 0) {
+                if (aux.getPersona().getId() == id) {
+                    return aux;
+                }
+            } else {
+                recursivo = buscar(id, aux.getLigaLista());
+                if (recursivo != null) {
+                    return recursivo;
+                }
+            }
+            aux = aux.getLiga();
+        }
+
+        return recursivo;
+    }
 }
