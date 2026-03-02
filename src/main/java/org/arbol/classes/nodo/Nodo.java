@@ -9,6 +9,13 @@ public class Nodo {
     private Persona persona;
     private Nodo liga;
 
+    public Nodo(Persona persona) {
+        this.sw = 0;
+        this.ligaLista = null;
+        this.persona = persona;
+        this.liga = null;
+    }
+
     public Nodo(int sw, Nodo ligaLista, Persona persona, Nodo liga) {
         this.sw = sw;
         this.ligaLista = ligaLista;
@@ -16,7 +23,8 @@ public class Nodo {
         this.liga = liga;
     }
 
-    public int getSw() {
+
+        public int getSw() {
         return sw;
     }
 

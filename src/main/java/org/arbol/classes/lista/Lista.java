@@ -8,6 +8,7 @@ public class Lista {
     private Nodo cabeza;
 
     public Lista() {
+        this.cabeza = null;
     }
 
     public Lista(Nodo cabeza) {
@@ -27,7 +28,8 @@ public class Lista {
         if (nodoPadre == null) {
             return false;
         }
-        Nodo nuevo = new Nodo(0, null, new Persona(persona.getId(), persona.getNombre(), persona.getEdad()), nodoPadre.getLiga());
+        Nodo nuevo = new Nodo(persona);
+        nuevo.setLiga(nodoPadre.getLiga());
         nodoPadre.setLiga(nuevo);
         return true;
     }
