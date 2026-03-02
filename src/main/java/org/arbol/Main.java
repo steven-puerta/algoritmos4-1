@@ -31,8 +31,18 @@ public class Main {
         lista.mostrarLista(lista.getCabeza());
 
         System.out.println("\n === Lista tras modificar === \n");
-        Persona prueba = new Persona(7, "Pepe", 5);
-        lista.Registrar(5, prueba);
+        Persona prueba1 = new Persona(8, "Pepe", 5);
+        lista.Registrar(5, prueba1);
+        lista.mostrarLista(lista.getCabeza());
+
+        System.out.println("\n === Lista tras modificar de nuevo === \n");
+        Persona prueba2 = new Persona(7, "Mario", 3);
+        lista.Registrar(5, prueba2);
+        lista.mostrarLista(lista.getCabeza());
+
+        System.out.println("\n === Lista tras modificar la última vez === \n");
+        Persona prueba3 = new Persona(9, "Jacinta", 10);
+        lista.Registrar(5, prueba3);
         lista.mostrarLista(lista.getCabeza());
     }
 }
