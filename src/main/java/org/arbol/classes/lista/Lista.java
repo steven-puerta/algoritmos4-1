@@ -29,8 +29,27 @@ public class Lista {
             return false;
         }
         Nodo nuevo = new Nodo(persona);
-        nuevo.setLiga(nodoPadre.getLiga());
-        nodoPadre.setLiga(nuevo);
+        if (nodoPadre.getLiga() == null) {
+            nodoPadre.setLiga(nuevo);
+            return true;
+        }
+        Nodo iterador = nodoPadre.getLiga();
+        Nodo anterior = nodoPadre;
+        while (iterador != null) {
+            int idIterador = (iterador.getSw() == 0) ? iterador.getPersona().getId() : iterador.getLigaLista().getPersona().getId();
+            if (persona.getId() < idIterador) {
+                nuevo.setLiga(iterador);
+                anterior.setLiga(nuevo);
+                return true;
+            } else {
+                if (iterador.getLiga() == null) {
+                    iterador.setLiga(nuevo);
+                    return true;
+                }
+            }
+            anterior = iterador;
+            iterador = iterador.getLiga();
+        }
         return true;
     }
 
