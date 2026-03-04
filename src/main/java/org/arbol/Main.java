@@ -44,5 +44,9 @@ public class Main {
         Persona prueba3 = new Persona(9, "Jacinta", 10);
         lista.Registrar(5, prueba3);
         lista.mostrarLista(lista.getCabeza());
+
+        System.out.println("\n === Lista tras actualizar dato === \n");
+        lista.Actualizar(7, "Mario Ernesto", 5, "nombre");
+        lista.mostrarLista(lista.getCabeza());
     }
 }

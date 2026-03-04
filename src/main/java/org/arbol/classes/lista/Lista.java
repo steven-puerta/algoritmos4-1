@@ -53,6 +53,22 @@ public class Lista {
         return true;
     }
 
+    public boolean Actualizar (int id, String nombre, int edad, String campoACambiar ) {
+        Nodo nodo = buscar(id, cabeza);
+        if (nodo == null) {
+            return false;
+        }
+        switch (campoACambiar) {
+            case "nombre":
+                nodo.getPersona().setNombre(nombre);
+                break;
+            case "edad":
+                nodo.getPersona().setEdad(edad);
+                break;
+        }
+        return true;
+    }
+
     public void mostrarLista (Nodo actual) {
 
         if (actual == null) {
