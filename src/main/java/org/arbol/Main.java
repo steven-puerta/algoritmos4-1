@@ -28,26 +28,46 @@ public class Main {
         Lista lista = new Lista(nodo1);
 
         System.out.println("=== Mostrar Lista ===");
-        lista.mostrarLista(lista.getCabeza());
+        lista.mostrarArbol();
 
         System.out.println("\n === Lista tras modificar === \n");
         Persona prueba1 = new Persona(8, "Pepe", 5);
         lista.Registrar(5, prueba1);
-        lista.mostrarLista(lista.getCabeza());
+        lista.mostrarArbol();
 
         System.out.println("\n === Lista tras modificar de nuevo === \n");
         Persona prueba2 = new Persona(7, "Mario", 3);
         lista.Registrar(5, prueba2);
-        lista.mostrarLista(lista.getCabeza());
+        lista.mostrarArbol();
 
         System.out.println("\n === Lista tras modificar la última vez === \n");
         Persona prueba3 = new Persona(9, "Jacinta", 10);
         lista.Registrar(5, prueba3);
-        lista.mostrarLista(lista.getCabeza());
+        lista.mostrarArbol();
+
+        System.out.println("\n === Lista tras bisnieto1 === \n");
+        Persona prueba4 = new Persona(12, "Cínforosa", 3);
+        lista.Registrar(6, prueba4);
+        lista.mostrarArbol();
+
+        System.out.println("\n === Lista tras bisnieto2 === \n");
+        Persona prueba5 = new Persona(11, "Anacrespe", 3);
+        lista.Registrar(6, prueba5);
+        lista.mostrarArbol();
+
+        System.out.println("\n === Lista tras tataranieto === \n");
+        Persona prueba6 = new Persona(13, "Marimar", 2);
+        lista.Registrar(11, prueba6);
+        lista.mostrarArbol();
+
+        System.out.println("\n === Lista tras tataratataranieto === \n");
+        Persona prueba7 = new Persona(14, "Juanito", 1);
+        lista.Registrar(13, prueba7);
+        lista.mostrarArbol();
 
         System.out.println("\n === Lista tras actualizar dato === \n");
         lista.Actualizar(7, "Mario Ernesto", 5, "nombre");
-        lista.mostrarLista(lista.getCabeza());
+        lista.mostrarArbol();
 
         System.out.println("\n === Mostrar Hermanos === \n");
         System.out.println("--- Buscando hermanos de Fernanda (id: 6) ---");

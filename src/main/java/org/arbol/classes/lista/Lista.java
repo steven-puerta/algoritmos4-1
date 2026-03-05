@@ -29,6 +29,15 @@ public class Lista {
             return false;
         }
         Nodo nuevo = new Nodo(persona);
+        if (nodoPadre.getSw() == 1) {
+            nodoPadre = nodoPadre.getLigaLista();
+        } else {
+            Nodo nuevaCabeza = new Nodo(0, null, nodoPadre.getPersona(), nuevo);
+            nodoPadre.setSw(1);
+            nodoPadre.setLigaLista(nuevaCabeza);
+            nodoPadre.setPersona(null);
+            return true;
+        }
         if (nodoPadre.getLiga() == null) {
             nodoPadre.setLiga(nuevo);
             return true;
@@ -58,6 +67,9 @@ public class Lista {
         if (nodo == null) {
             return false;
         }
+        if (nodo.getSw() == 1) {
+            nodo = nodo.getLigaLista();
+        }
         switch (campoACambiar) {
             case "nombre":
                 nodo.getPersona().setNombre(nombre);
@@ -84,6 +96,51 @@ public class Lista {
         }
     }
 
+    public void mostrarArbol() {
+        if (cabeza == null) {
+            System.out.println("La lista está vacía");
+            return;
+        }
+        // 1. La cabeza principal (Ana) es el primer padre.
+        System.out.println(formatearNodo(cabeza));
+
+        // 2. Sus hijos son los que están en su cadena de ligas.
+        if (cabeza.getLiga() != null) {
+            mostrarArbolRecursivo(cabeza.getLiga(), "");
+        }
+    }
+
+    private void mostrarArbolRecursivo(Nodo actual, String prefijo) {
+        while (actual != null) {
+            // Determinamos si este nodo tiene hermanos después en esta misma lista
+            boolean esUltimo = (actual.getLiga() == null);
+            String conector = esUltimo ? "└── " : "├── ";
+            String nuevoPrefijo = prefijo + (esUltimo ? "    " : "│   ");
+
+            if (actual.getSw() == 0) {
+                System.out.println(prefijo + conector + formatearNodo(actual));
+            }
+            else {
+                Nodo cabezaSub = actual.getLigaLista();
+                if (cabezaSub != null) {
+                    System.out.println(prefijo + conector + formatearNodo(cabezaSub));
+                    if (cabezaSub.getLiga() != null) {
+                        mostrarArbolRecursivo(cabezaSub.getLiga(), nuevoPrefijo);
+                    }
+                }
+            }
+
+            // Aquí no aumentamos el prefijo porque están al mismo nivel.
+            actual = actual.getLiga();
+        }
+    }
+
+    private String formatearNodo(Nodo n) {
+        if (n == null || n.getPersona() == null) return "N/A";
+        Persona p = n.getPersona();
+        return "(" + p.getId() + " | " + p.getNombre() + " | " + p.getEdad() + ")";
+    }
+
     private Nodo buscar(int id, Nodo nodo) {
         Nodo aux = nodo;
         if (aux == null) {
@@ -99,6 +156,9 @@ public class Lista {
                     return aux;
                 }
             } else {
+                if (aux.getLigaLista().getPersona().getId() == id) {
+                    return aux;
+                }
                 recursivo = buscar(id, aux.getLigaLista());
                 if (recursivo != null) {
                     return recursivo;
