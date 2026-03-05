@@ -249,4 +249,131 @@ public class Lista {
         }
         return nivelEliminado;
     }
+
+    public void mostrarHermanos(int id) {
+        mostrarHermanos(id, getCabeza());
+    }
+
+    private void mostrarHermanos(int id, Nodo nodoPadre) {
+        if (nodoPadre == null) {
+            return;
+        }
+
+        Nodo iter = nodoPadre.getLiga();
+        boolean encontrado = false;
+
+        // Primera pasada: verificar si el ID buscado es hijo directo de nodoPadre
+        while (iter != null) {
+            int idActual = (iter.getSw() == 0) ? iter.getPersona().getId() : iter.getLigaLista().getPersona().getId();
+
+            if (idActual == id) {
+                encontrado = true;
+                break;
+            }
+            iter = iter.getLiga();
+        }
+
+        if (encontrado) {
+            System.out.println("Hermanos del nodo " + id + " (Hijos de " + nodoPadre.getPersona().getNombre() + "):");
+            iter = nodoPadre.getLiga();
+            while (iter != null) {
+                int idActual = (iter.getSw() == 0) ? iter.getPersona().getId() : iter.getLigaLista().getPersona().getId();
+                String info = (iter.getSw() == 0) ? iter.getPersona().toString() : iter.getLigaLista().getPersona().toString();
+
+                if (idActual != id) {
+                    System.out.println(info);
+                }
+                iter = iter.getLiga();
+            }
+        } else {
+            // Si no se encontró en este nivel, buscar recursivamente en las sublistas
+            iter = nodoPadre.getLiga();
+            while (iter != null) {
+                if (iter.getSw() != 0) {
+                    mostrarHermanos(id, iter.getLigaLista());
+                }
+                iter = iter.getLiga();
+            }
+        }
+    }
+
+    public void mostrarAncestros(int id) {
+        if (cabeza == null) {
+            System.out.println("La lista está vacía");
+            return;
+        }
+        if (cabeza.getSw() == 0 && cabeza.getPersona().getId() == id) {
+            System.out.println("El nodo es la raíz, no tiene ancestros.");
+            return;
+        }
+        if (!mostrarAncestros(id, cabeza)) {
+            System.out.println("No se encontró el nodo con id: " + id);
+        }
+    }
+
+    private boolean mostrarAncestros(int id, Nodo padre) {
+        if (padre == null) return false;
+
+        Nodo iter = padre.getLiga();
+        while (iter != null) {
+            int idActual = (iter.getSw() == 0) ? iter.getPersona().getId() : iter.getLigaLista().getPersona().getId();
+            if (idActual == id) {
+                System.out.println(padre.getPersona().toString());
+                return true;
+            }
+            if (iter.getSw() != 0) {
+                if (mostrarAncestros(id, iter.getLigaLista())) {
+                    System.out.println(padre.getPersona().toString());
+                    return true;
+                }
+            }
+            iter = iter.getLiga();
+        }
+        return false;
+    }
+
+    public void mostrarMayorGrado() {
+        if (cabeza == null) {
+            System.out.println("La lista está vacía");
+            return;
+        }
+        // Usamos arreglos de 1 posición para simular paso por referencia
+        Nodo[] maxNodo = new Nodo[1];
+        int[] maxGrado = new int[1];
+        maxGrado[0] = -1;
+
+        buscarMayorGrado(cabeza, maxNodo, maxGrado);
+
+        if (maxNodo[0] != null) {
+            System.out.println("El nodo con mayor grado es: " + maxNodo[0].getPersona().getNombre() +
+                    " con grado: " + maxGrado[0]);
+        }
+    }
+
+    private void buscarMayorGrado(Nodo actual, Nodo[] maxNodo, int[] maxGrado) {
+        if (actual == null) return;
+
+        // Calcular grado del nodo actual (contar hijos en la lista enlazada)
+        int contador = 0;
+        Nodo iter = actual.getLiga();
+        while (iter != null) {
+            contador++;
+            iter = iter.getLiga();
+        }
+
+        // Actualizamos si encontramos un grado mayor estricto (mantiene el primero encontrado en caso de empate)
+        if (contador > maxGrado[0]) {
+            maxGrado[0] = contador;
+            maxNodo[0] = actual;
+        }
+
+        // Recorrido recursivo a los hijos que son sublistas
+        iter = actual.getLiga();
+        while (iter != null) {
+            if (iter.getSw() == 1) {
+                buscarMayorGrado(iter.getLigaLista(), maxNodo, maxGrado);
+            }
+            iter = iter.getLiga();
+        }
+    }
 }

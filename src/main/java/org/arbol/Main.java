@@ -48,5 +48,19 @@ public class Main {
         System.out.println("\n === Lista tras actualizar dato === \n");
         lista.Actualizar(7, "Mario Ernesto", 5, "nombre");
         lista.mostrarLista(lista.getCabeza());
+
+        System.out.println("\n === Mostrar Hermanos === \n");
+        System.out.println("--- Buscando hermanos de Fernanda (id: 6) ---");
+        lista.mostrarHermanos(6);
+
+        System.out.println("\n--- Buscando hermanos de Bruno (id: 2) ---");
+        lista.mostrarHermanos(2);
+
+        System.out.println("\n === Mostrar Ancestros === \n");
+        System.out.println("--- Buscando ancestros de Eduardo (id: 5) ---");
+        lista.mostrarAncestros(5);
+
+        System.out.println("\n === Nodo de Mayor Grado === \n");
+        lista.mostrarMayorGrado();
     }
 }
