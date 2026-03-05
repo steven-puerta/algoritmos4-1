@@ -376,4 +376,48 @@ public class Lista {
             iter = iter.getLiga();
         }
     }
+
+    public void mostrarMayorNivel() {
+        if (cabeza == null) {
+            System.out.println("La lista está vacía");
+            return;
+        }
+        int[] maxNivel = new int[1];
+        maxNivel[0] = -1;
+        Nodo[] maxNodo = new Nodo[1];
+
+        buscarMayorNivel(cabeza, 1, maxNivel, maxNodo);
+
+        if (maxNodo[0] != null) {
+            System.out.println("El nodo en el mayor nivel (" + maxNivel[0] + ") es: " + maxNodo[0].getPersona().toString());
+        }
+    }
+
+    private void buscarMayorNivel(Nodo actual, int nivelActual, int[] maxNivel, Nodo[] maxNodo) {
+        if (actual == null) return;
+
+        // El nodo 'actual' es la cabeza de este nivel (Padre), actualizamos si es el mayor encontrado
+        if (nivelActual > maxNivel[0]) {
+            maxNivel[0] = nivelActual;
+            maxNodo[0] = actual;
+        }
+
+        Nodo iter = actual.getLiga();
+        while (iter != null) {
+            if (iter.getSw() == 0) {
+                // Es un hijo hoja (Persona), está un nivel más abajo que el padre
+                if (nivelActual + 1 > maxNivel[0]) {
+                    maxNivel[0] = nivelActual + 1;
+                    maxNodo[0] = iter;
+                }
+            } else {
+                // Es un puente a una sublista. El nodo apuntado es el hijo (cabeza de sublista)
+                // Se llama recursivamente con el nivel del hijo (nivelActual + 1)
+                buscarMayorNivel(iter.getLigaLista(), nivelActual + 1, maxNivel, maxNodo);
+            }
+            iter = iter.getLiga();
+        }
+    }
+
+
 }

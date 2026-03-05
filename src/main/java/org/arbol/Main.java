@@ -62,5 +62,8 @@ public class Main {
 
         System.out.println("\n === Nodo de Mayor Grado === \n");
         lista.mostrarMayorGrado();
+
+        System.out.println("\n === Mayor Nivel === \n");
+        lista.mostrarMayorNivel();
     }
 }
