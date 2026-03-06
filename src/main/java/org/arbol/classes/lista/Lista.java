@@ -198,6 +198,40 @@ public class Lista {
         }
     }
 
+    public void mostrarHijos (int id) {
+        if (id == getCabeza().getPersona().getId()) {
+            Nodo aux = getCabeza().getLiga();
+            if (aux == null) {
+                System.out.println("La raíz no tiene hijos");
+            }
+            while (aux != null) {
+                if (aux.getSw() == 0) {
+                    System.out.println(aux.getPersona().toString());
+                } else {
+                    System.out.println(aux.getLigaLista().getPersona().toString());
+                }
+                aux = aux.getLiga();
+            }
+        } else {
+            Nodo buscado = buscar(id, cabeza);
+            if (buscado != null) {
+                if (buscado.getSw() == 0) {
+                    System.out.println("La persona solicitada no tiene hijos");
+                } else {
+                    Nodo aux = buscado.getLigaLista().getLiga();
+                    while (aux != null) {
+                        if (aux.getSw() == 0) {
+                            System.out.println(aux.getPersona().toString());
+                        } else {
+                            System.out.println(aux.getLigaLista().getPersona().toString());
+                        }
+                        aux = aux.getLiga();
+                    }
+                }
+            }
+        }
+    }
+
     public int alturaArbol(){
         return alturaArbol(getCabeza());
     }

@@ -88,5 +88,8 @@ public class Main {
 
         System.out.println("\n === Mostrar padre === \n");
         lista.mostrarPadre(2);
+
+        System.out.println("\n === Mostrar hijos === \n");
+        lista.mostrarHijos(5);
     }
 }
