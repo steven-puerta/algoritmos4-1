@@ -81,6 +81,7 @@ public class Lista {
         return true;
     }
 
+    //Implementación anterior
     public void mostrarLista (Nodo actual) {
 
         if (actual == null) {
@@ -168,6 +169,33 @@ public class Lista {
         }
 
         return recursivo;
+    }
+
+    public void mostrarPadre (int id) {
+        if (id == getCabeza().getPersona().getId()) {
+            System.out.println("La persona buscada es la raíz, por lo tanto no tiene padre en la lista");
+        }
+        mostrarPadre(id, getCabeza().getLiga(), getCabeza());
+    }
+
+    private void mostrarPadre (int id, Nodo actual, Nodo padre) {
+        if (actual == null) {
+            System.out.println("No se encontró el nodo buscado debajo del padre " + padre.getPersona().getNombre());
+        }
+        while (actual != null) {
+            if (actual.getSw() == 0) {
+                if (actual.getPersona().getId() == id) {
+                    System.out.println("El nodo padre de " + id + " es " + padre.getPersona().getNombre());
+                }
+            } else {
+                if (actual.getLigaLista().getPersona().getId() == id) {
+                    System.out.println("El nodo padre de " + id + " es " + padre.getPersona().getNombre());
+                } else {
+                    mostrarPadre(id, actual.getLigaLista().getLiga(), actual.getLigaLista());
+                }
+            }
+            actual = actual.getLiga();
+        }
     }
 
     public int alturaArbol(){

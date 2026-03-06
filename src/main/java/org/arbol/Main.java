@@ -85,5 +85,8 @@ public class Main {
 
         System.out.println("\n === Mayor Nivel === \n");
         lista.mostrarMayorNivel();
+
+        System.out.println("\n === Mostrar padre === \n");
+        lista.mostrarPadre(2);
     }
 }
