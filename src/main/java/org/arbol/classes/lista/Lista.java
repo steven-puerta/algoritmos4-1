@@ -179,12 +179,14 @@ public class Lista {
         int alturaSubarbol = 0;
         int maxAlturaSubarbol = 0;
         if(actual != null){
+            if (actual.getLiga() != null){
+                maxAlturaSubarbol = 1;
+            }
             while(actual != null){
                 // Si sw=1, este nodo es un puente a una sublista (un hijo con sus propios hijos)
                 // Se calcula recursivamente la altura de esa sublista
                 if(actual.getSw() != 0){
                     alturaSubarbol = alturaArbol(actual.getLigaLista());
-                    // Se guarda solo la mayor altura encontrada entre todas las sublistas
                     if(alturaSubarbol > maxAlturaSubarbol){
                         maxAlturaSubarbol = alturaSubarbol;
                     }
