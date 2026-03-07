@@ -335,7 +335,7 @@ public class Lista {
         Nodo anterior = actual; // guarda el nodo previo para reenlazar
         //En la estructura de lista generalizada actual no puede existir mas de una raiz por lo que eliminar la raiz
         //seria dividir la lista en multiples listas
-        if(nivelObjetivo == 1 && nivelActual == 1){
+        if(nivelObjetivo == 1){
             System.out.println("No se puede eliminar el primer nivel");
             return false;
         }
@@ -348,12 +348,14 @@ public class Lista {
                     Nodo sublista = actual.getLigaLista().getLiga(); // primer hijo del nodo eliminado
                     anterior.setLiga(sublista); // el anterior ahora apunta a los hijos promovidos
 
+                    Nodo ultimoHijo = sublista;
+
                     // Recorre hasta el último hijo promovido para reconectar la cadena
-                    while (sublista.getLiga() != null){
-                        sublista = sublista.getLiga();
+                    while (ultimoHijo.getLiga() != null){
+                        ultimoHijo = ultimoHijo.getLiga();
                     }
-                    sublista.setLiga(actual.getLiga()); // reconecta el resto de la lista padre
-                    actual = sublista;
+                    ultimoHijo.setLiga(actual.getLiga()); // reconecta el resto de la lista padre
+                    actual = ultimoHijo;
                     // Se mueve el actual a el ultimo hijo para reprosesarlos y por ende eliminarlos
                 }else{
                     // Nodo hoja en el nivel objetivo: se desconecta
@@ -366,6 +368,12 @@ public class Lista {
                 if(actual.getSw() != 0){
                     // Descender a la sublista a buscar el nivel objetivo
                     nivelEliminado = eliminarNivel(nivelObjetivo, actual.getLigaLista(), nivelActual+1);
+
+                    if (actual.getLigaLista().getLiga() == null) {
+                        // Recuperar la persona del primer nodo de la sublista (el propio padre)
+                        anterior.setLiga(actual.getLigaLista());
+                        actual.getLigaLista().setLiga(actual.getLiga());
+                    }
                 }
             }
             anterior = actual;
