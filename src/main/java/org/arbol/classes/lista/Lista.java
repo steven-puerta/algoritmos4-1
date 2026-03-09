@@ -383,42 +383,70 @@ public class Lista {
     }
 
     public void mostrarHermanos(int id) {
-        mostrarHermanos(id, getCabeza());
+
+        if (cabeza == null) {
+            System.out.println("La lista está vacía");
+            return;
+        }
+        //La cabeza de la lista no tiene hermanos
+        if (cabeza.getPersona().getId() == id) {
+            System.out.println("La raíz no tiene hermanos");
+            return;
+        }
+        mostrarHermanos(id, cabeza);
     }
 
     private void mostrarHermanos(int id, Nodo nodoPadre) {
+
         if (nodoPadre == null) {
             return;
         }
-
         Nodo iter = nodoPadre.getLiga();
         boolean encontrado = false;
 
-        // Primera pasada: verificar si el ID buscado es hijo directo de nodoPadre
+        //Verificar si el nodo buscado es hijo de este padre
         while (iter != null) {
-            int idActual = (iter.getSw() == 0) ? iter.getPersona().getId() : iter.getLigaLista().getPersona().getId();
 
+            int idActual;
+            if (iter.getSw() == 0) {
+                idActual = iter.getPersona().getId();
+            } else {
+                idActual = iter.getLigaLista().getPersona().getId();
+            }
             if (idActual == id) {
                 encontrado = true;
                 break;
             }
             iter = iter.getLiga();
         }
-
         if (encontrado) {
+
             System.out.println("Hermanos del nodo " + id + " (Hijos de " + nodoPadre.getPersona().getNombre() + "):");
             iter = nodoPadre.getLiga();
-            while (iter != null) {
-                int idActual = (iter.getSw() == 0) ? iter.getPersona().getId() : iter.getLigaLista().getPersona().getId();
-                String info = (iter.getSw() == 0) ? iter.getPersona().toString() : iter.getLigaLista().getPersona().toString();
+            boolean tieneHermanos = false;
 
+            while (iter != null) {
+
+                int idActual;
+                String info;
+                if (iter.getSw() == 0) {
+                    idActual = iter.getPersona().getId();
+                    info = iter.getPersona().toString();
+                } else {
+                    idActual = iter.getLigaLista().getPersona().getId();
+                    info = iter.getLigaLista().getPersona().toString();
+                }
                 if (idActual != id) {
                     System.out.println(info);
+                    tieneHermanos = true;
                 }
                 iter = iter.getLiga();
             }
+            if (!tieneHermanos) {
+                System.out.println("La persona no tiene hermanos.");
+            }
         } else {
-            // Si no se encontró en este nivel, buscar recursivamente en las sublistas
+            // Buscar recursivamente en las sublistas
             iter = nodoPadre.getLiga();
             while (iter != null) {
                 if (iter.getSw() != 0) {
@@ -573,13 +601,11 @@ public class Lista {
             System.out.println("La persona no tiene descendientes");
             return;
         }
-
         Nodo hijo = nodo.getLigaLista().getLiga();
         if (hijo == null) {
             System.out.println("La persona no tiene descendientes");
             return;
         }
-
         buscarDescendientes(hijo);
     }
 
@@ -592,9 +618,7 @@ public class Lista {
             }
             else {
                 Nodo sub = actual.getLigaLista();
-
                 System.out.println(sub.getPersona().toString());
-
                 buscarDescendientes(sub.getLiga());
             }
             actual = actual.getLiga();
