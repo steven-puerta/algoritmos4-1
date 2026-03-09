@@ -184,12 +184,12 @@ public class Main {
                             lista.mostrarAncestros(idAncestros);
                             break;
 
-                        // ── Descendientes (método faltante) ──────────
+                        // ── Descendientes ────────────────────────────
                         case 5:
                             System.out.print("Cédula de la persona: ");
                             int idDescendientes = sc.nextInt(); sc.nextLine();
-                            System.out.println("⚠ Método 'mostrarDescendientes(" + idDescendientes + ")' aún no implementado.");
-                            // lista.mostrarDescendientes(idDescendientes);
+                            System.out.println();
+                            lista.mostrarDescendientes(idDescendientes);
                             break;
 
                         case 0:

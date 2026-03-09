@@ -551,5 +551,57 @@ public class Lista {
         }
     }
 
+    public void mostrarDescendientes(int id) {
+
+        //Si el buscado es la cabeza
+        if (cabeza.getPersona().getId() == id) {
+            Nodo hijo = cabeza.getLiga();
+            if (hijo == null) {
+                System.out.println("La persona no tiene descendientes");
+                return;
+            }
+            buscarDescendientes(hijo);
+            return;
+        }
+
+        Nodo nodo = buscar(id, cabeza);
+        if (nodo == null) {
+            System.out.println("No se encontró el nodo");
+            return;
+        }
+        if (nodo.getSw() == 0) {
+            System.out.println("La persona no tiene descendientes");
+            return;
+        }
+
+        Nodo hijo = nodo.getLigaLista().getLiga();
+        if (hijo == null) {
+            System.out.println("La persona no tiene descendientes");
+            return;
+        }
+
+        buscarDescendientes(hijo);
+    }
+
+    private void buscarDescendientes(Nodo actual) {
+
+        while (actual != null) {
+
+            if (actual.getSw() == 0) {
+                System.out.println(actual.getPersona().toString());
+            }
+            else {
+                Nodo sub = actual.getLigaLista();
+
+                System.out.println(sub.getPersona().toString());
+
+                buscarDescendientes(sub.getLiga());
+            }
+            actual = actual.getLiga();
+        }
+    }
+
+
+
 
 }
