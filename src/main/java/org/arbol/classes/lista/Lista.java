@@ -472,11 +472,20 @@ public class Lista {
     }
 
     private boolean mostrarAncestros(int id, Nodo padre) {
-        if (padre == null) return false;
 
+        if (padre == null) {
+            return false;
+        }
         Nodo iter = padre.getLiga();
+
         while (iter != null) {
-            int idActual = (iter.getSw() == 0) ? iter.getPersona().getId() : iter.getLigaLista().getPersona().getId();
+
+            int idActual;
+            if (iter.getSw() == 0) {
+                idActual = iter.getPersona().getId();
+            } else {
+                idActual = iter.getLigaLista().getPersona().getId();
+            }
             if (idActual == id) {
                 System.out.println(padre.getPersona().toString());
                 return true;
