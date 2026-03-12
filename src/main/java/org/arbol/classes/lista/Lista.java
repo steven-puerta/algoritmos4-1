@@ -81,20 +81,48 @@ public class Lista {
         return true;
     }
 
-    //Implementación anterior
-    public void mostrarLista (Nodo actual) {
-
-        if (actual == null) {
-            System.out.println("La lista está vacía");
+    public boolean eliminar (int id) {
+        Nodo nodo = buscar(id, cabeza);;
+        if (nodo == null) {
+            return false;
         }
-        while (actual != null) {
-            if (actual.getSw() == 0) {
-                System.out.println(actual.getPersona().toString());
+        Nodo anterior = buscarAnterior(id, cabeza);
+        
+        if (anterior != null) {
+            if (anterior.getLiga().getSw() == 0) {
+                anterior.setLiga(anterior.getLiga().getLiga());
             } else {
-                mostrarLista(actual.getLigaLista());
+                if (anterior.getLiga().getLigaLista().getLiga().getLiga() == null) {
+                    //Si el que quiero eliminar es cabeza de una lista y esa lista tiene un solo hijo...
+                    //... promuevo a ese único hijo para que sea la liga de la sublista superior,
+                    //eliminando la sublista inferior, pues no tiene sentido tener una sublista con un solo nodo
+
+                    //1 - Le asigno al huérfano la liga de su padre en la lista superior
+                    anterior.getLiga().getLigaLista().getLiga().setLiga(anterior.getLiga().getLiga());
+
+                    //2 - Le asigno al anterior al padre el huérfano como liga
+                    anterior.setLiga(anterior.getLiga().getLigaLista().getLiga());
+                } else {
+                    //Si la sublista de huérfanos tiene más de un hijo, esta sigue existiendo...
+                    //... pero el hijo mayor asciende a padre
+
+                    if (anterior.getLiga().getLigaLista().getLiga().getSw() == 0) {
+                        anterior.getLiga().setLigaLista(anterior.getLiga().getLigaLista().getLiga());
+                    } else {
+                        Nodo hermano = anterior.getLiga().getLigaLista().getLiga().getLiga();
+                        while(hermano != null) {
+                            Registrar(anterior.getLiga().getLigaLista().getLiga().getLigaLista().getPersona().getId(), hermano.getPersona());
+                            hermano = hermano.getLiga();
+                        }
+                        anterior.getLiga().setLigaLista(anterior.getLiga().getLigaLista().getLiga().getLigaLista());
+                    }
+                }
             }
-            actual = actual.getLiga();
+        } else {
+            System.out.println("El nodo a eliminar es la cabeza de la lista (no tiene anterior).");
+            return false;
         }
+        return true;
     }
 
     public void mostrarArbol() {
@@ -169,6 +197,46 @@ public class Lista {
         }
 
         return recursivo;
+    }
+
+    private Nodo buscarAnterior (int id, Nodo nodo) {
+        if (nodo == null) {
+            return null;
+        }
+        // Si el nodo buscado es la cabeza, NO tiene anterior(retorna null).
+        int idCabeza = (nodo.getSw() == 0) ? nodo.getPersona().getId() : nodo.getLigaLista().getPersona().getId();
+        if (idCabeza == id) {
+            return null;
+        }
+        Nodo actual = nodo;
+        while (actual != null) {
+            //Mirar al HERMANO(Liga)
+            if (actual.getLiga() != null) {
+                //Obtenemos el ID del siguiente nodo sin movernos todavía
+                int idSiguiente = (actual.getLiga().getSw() == 0) 
+                                ? actual.getLiga().getPersona().getId() 
+                                : actual.getLiga().getLigaLista().getPersona().getId();
+                if (idSiguiente == id) {
+                    //Encontrado: 'actual' es el nodo ANTERIOR al buscado
+                    return actual;
+                }
+            }
+            //Mirar al HIJO (LigaLista) si es un nodo padre (sw=1)
+            if (actual.getSw() == 1) {
+                // Verificamos si el primer hijo es el buscado.
+                // Si es así, 'actual' (el padre) es el nodo anterior.
+                if (actual.getLigaLista().getPersona().getId() == id) {
+                    return actual;
+                }
+                // Si no es el primer hijo, buscamos recursivamente dentro de la sublista
+                Nodo encontradoEnSublista = buscarAnterior(id, actual.getLigaLista());
+                if (encontradoEnSublista != null) {
+                    return encontradoEnSublista;
+                }
+            }
+            actual = actual.getLiga();
+        }
+        return null;
     }
 
     public void mostrarPadre (int id) {
