@@ -25,6 +25,7 @@ public class Lista {
 
     public boolean Registrar (int padre, Persona persona) {
         Nodo nodoPadre = buscar(padre, cabeza);
+        System.out.println("nodoPadre:" + nodoPadre);
         if (nodoPadre == null) {
             return false;
         }
@@ -32,11 +33,13 @@ public class Lista {
         if (nodoPadre.getSw() == 1) {
             nodoPadre = nodoPadre.getLigaLista();
         } else {
-            Nodo nuevaCabeza = new Nodo(0, null, nodoPadre.getPersona(), nuevo);
-            nodoPadre.setSw(1);
-            nodoPadre.setLigaLista(nuevaCabeza);
-            nodoPadre.setPersona(null);
-            return true;
+            if (nodoPadre != cabeza) {
+                Nodo nuevaCabeza = new Nodo(0, null, nodoPadre.getPersona(), nuevo);
+                nodoPadre.setSw(1);
+                nodoPadre.setLigaLista(nuevaCabeza);
+                nodoPadre.setPersona(null);
+                return true;
+            }
         }
         if (nodoPadre.getLiga() == null) {
             nodoPadre.setLiga(nuevo);

@@ -88,7 +88,7 @@ public class Main {
                             System.out.print("Cédula de la persona a eliminar: ");
                             int idEliminar = sc.nextInt(); sc.nextLine();
                             System.out.println("⚠ Método 'eliminar(" + idEliminar + ")' aún no implementado.");
-                            // lista.eliminar(idEliminar);
+                            lista.eliminar(idEliminar);
                             break;
 
                         // ── Actualizar ───────────────────────────────
