@@ -10,7 +10,11 @@ public class Main {
     public static void main(String[] args) {
 
         // ========================== CONSTRUCCIÓN DEL ÁRBOL INICIAL ==========================
-        Nodo sub1Nodo2 = new Nodo(0, null, new Persona(4, "Diana", 28), null);
+
+        //Nodo nodo1 = new Nodo(0, null, new Persona(100, "X", 80), null);
+        //Nodo nodo1 = new Nodo(0, null, new Persona(100, "X", 80), null);
+
+        /*Nodo sub1Nodo2 = new Nodo(0, null, new Persona(4, "Diana", 28), null);
         Nodo sub1Nodo1 = new Nodo(0, null, new Persona(3, "Carlos", 35), sub1Nodo2);
 
         Nodo sub2Nodo2 = new Nodo(0, null, new Persona(6, "Fernanda", 22), null);
@@ -24,6 +28,53 @@ public class Main {
         nodo1.setLiga(nodo2);
         nodo2.setLiga(nodo3);
         nodo3.setLiga(nodo4);
+
+
+        Lista lista = new Lista(nodo1);*/
+
+        // --- NIVEL 3 (Nietos de H y W) ---
+// Hijos de W: A y B
+        Nodo nodoB = new Nodo(0, null, new Persona(750, "Berta", 30), null);
+        Nodo nodoA = new Nodo(0, null, new Persona(700, "Andrea", 20), nodoB);
+
+// Hijo de G: Z
+        Nodo nodoZ = new Nodo(0, null, new Persona(800, "Zulema", 40), null);
+
+// --- NIVEL 2 (Hijos de C y H) ---
+// Hijos de C: D y E
+        Nodo nodoE = new Nodo(0, null, new Persona(450, "Estefania", 20), null);
+        Nodo nodoD = new Nodo(0, null, new Persona(400, "David", 10), nodoE);
+
+// Hijos de H: W, G, K, M
+        Nodo nodoM = new Nodo(0, null, new Persona(650, "Maria", 18), null);
+        Nodo nodoK = new Nodo(0, null, new Persona(600, "Kevin", 25), nodoM);
+
+// Envolvemos a G (porque tiene hijos) y lo ligamos a su hermano K
+        Nodo subG = new Nodo(0, null, new Persona(550, "Gildardo", 30), nodoZ);
+        Nodo wrapG = new Nodo(1, subG, null, nodoK);
+
+// Envolvemos a W (porque tiene hijos) y lo ligamos a su hermano wrapG
+        Nodo subW = new Nodo(0, null, new Persona(500, "Walter", 15), nodoA);
+        Nodo wrapW = new Nodo(1, subW, null, wrapG);
+
+// --- NIVEL 1 (Hijos de X) ---
+// S es una hoja, último hermano
+        Nodo nodoS = new Nodo(0, null, new Persona(300, "Sebastian", 40), null);
+
+// Envolvemos a H (porque tiene hijos) y lo ligamos a su hermano S
+        Nodo subH = new Nodo(0, null, new Persona(250, "Hugo", 50), wrapW);
+        Nodo wrapH = new Nodo(1, subH, null, nodoS);
+
+// F es una hoja, hermano de H
+        Nodo nodoF = new Nodo(0, null, new Persona(200, "Fernando", 35), wrapH);
+
+// Envolvemos a C (porque tiene hijos) y lo ligamos a su hermano F
+        Nodo subC = new Nodo(0, null, new Persona(150, "Camilo", 20), nodoD);
+        Nodo wrapC = new Nodo(1, subC, null, nodoF);
+
+// --- RAÍZ ---
+// El nodo raíz X apunta a la sublista de sus hijos (wrapC)
+        Nodo nodo1 = new Nodo(0, null, new Persona(100, "Ximena", 80), wrapC);
 
         Lista lista = new Lista(nodo1);
         Scanner sc = new Scanner(System.in);
@@ -87,7 +138,6 @@ public class Main {
                         case 2:
                             System.out.print("Cédula de la persona a eliminar: ");
                             int idEliminar = sc.nextInt(); sc.nextLine();
-                            System.out.println("⚠ Método 'eliminar(" + idEliminar + ")' aún no implementado.");
                             lista.eliminar(idEliminar);
                             break;
 
